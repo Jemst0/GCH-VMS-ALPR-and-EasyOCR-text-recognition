@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALPR Vision Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Object Detection ALPR Demo</p>
+        <h1>Train-ready UI for live plate detection and image uploads.</h1>
+        <p class="lede">
+          This front end is prepared for your trained model weights. It includes live camera capture,
+          photo upload, a detection stage, and a results feed for bounding boxes and OCR output.
+        </p>
+      </div>
+
+      <div class="hero-stats">
+        <article>
+          <span>Model</span>
+          <strong>ALPR Detector</strong>
+        </article>
+        <article>
+          <span>Inputs</span>
+          <strong>Camera + Upload</strong>
+        </article>
+        <article>
+          <span>Output</span>
+          <strong>Boxes + Plate Text</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <aside class="panel control-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Controls</p>
+            <h2>Source selection</h2>
+          </div>
+          <span class="status-dot" id="cameraStatus">Idle</span>
+        </div>
+
+        <div class="control-stack">
+          <button class="primary" id="startCameraBtn" type="button">Start live camera</button>
+          <button class="secondary" id="stopCameraBtn" type="button">Stop camera</button>
+
+          <label class="upload-card" for="imageUpload">
+            <input id="imageUpload" type="file" accept="image/*" multiple />
+            <span>Upload vehicle photos</span>
+            <small>JPG, PNG, WEBP, HEIC if supported by the browser.</small>
+          </label>
+
+          <button class="ghost" id="captureBtn" type="button">Capture current frame</button>
+          <button class="ghost" id="demoBtn" type="button">Load demo plate scene</button>
+        </div>
+
+        <div class="panel-note">
+          <p>Ready for your weights later.</p>
+          <span>Replace the mock detection layer in <strong>app.js</strong> with your model inference code.</span>
+        </div>
+      </aside>
+
+      <section class="panel stage-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Preview</p>
+            <h2>Live stage</h2>
+          </div>
+          <div class="pill-row">
+            <span class="pill" id="sourceLabel">No source loaded</span>
+            <span class="pill alt" id="confidenceLabel">--</span>
+          </div>
+        </div>
+
+        <div class="stage" id="stage">
+          <video id="cameraVideo" autoplay playsinline muted></video>
+          <img id="previewImage" alt="Uploaded preview" />
+          <canvas id="overlayCanvas"></canvas>
+
+          <div class="empty-state" id="emptyState">
+            <h3>Camera or upload a plate image</h3>
+            <p>Start the camera or upload a vehicle picture to see the detection overlay and OCR feed.</p>
+          </div>
+        </div>
+
+        <div class="stage-footer">
+          <div>
+            <span>Detected objects</span>
+            <strong id="detectionCount">0</strong>
+          </div>
+          <div>
+            <span>Last plate text</span>
+            <strong id="plateText">--</strong>
+          </div>
+          <div>
+            <span>Inference source</span>
+            <strong id="inferenceMode">Waiting</strong>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel results-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Detection Feed</p>
+            <h2>Model output</h2>
+          </div>
+          <span class="status-dot live">Demo</span>
+        </div>
+
+        <div class="results-list" id="resultsList"></div>
+
+        <div class="file-strip">
+          <p>Uploaded frames</p>
+          <div id="thumbnailStrip" class="thumbnail-strip"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
