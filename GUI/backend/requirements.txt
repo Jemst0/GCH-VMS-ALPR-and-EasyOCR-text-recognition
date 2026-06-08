@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+ultralytics
+pillow
+python-multipart
+torch
+opencv-python
+numpy
+lightning
+lprnet
